@@ -42,14 +42,31 @@
 
       console.assert(p === 3, "That is wrong!");
       // clearing
-
-      // console.clear();
+      // =>  console.clear();
 
       // Viewing DOM Elements
+      console.log(p);
 
       // Grouping together
+      dogs.forEach((dog) => {
+        console.groupCollapsed(`${dog.name}`);
+        console.log(`This is ${dog.name}. He is ${dog.age} years old`);
+        console.groupEnd(`${dog.name}`);
+      });
 
       // counting
+      console.count("Suwon");
+      console.count("Suwon");
+      console.count("Mattias");
+      console.count("Mattias");
+      console.count("Suwon");
+      console.count("Mattias");
+      console.count("Suwon");
+      console.count("Mattias");
+      console.count("Mattias");
+      console.count("Mattias");
+      console.count("Mattias");
+      console.count("Mattias");
 
       // timing
     </script>
