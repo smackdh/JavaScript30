@@ -96,18 +96,41 @@
 
     <script>
       // Access the checkboxes ✅
-      // For every checkbox, listen to a click and do something.
+      // For every checkbox, listen to a click and do something. ✅
+      // Remember the last clicked checkbox ✅
+      // Remember a default variable(inBetweenCheckbox) to change conditionally for true/false, so that we can change the boxes.
+      // When you click on one checkbox, go through all the checkboxes AND if the checkbox is either the event
+      // or the checkboxs iteh last checked
+      // change value of our isChecked to true.
+      //
       const checkboxes = document.querySelectorAll(
         '.inbox input[type="checkbox"]'
       );
 
+      let lastClicked;
+
       function checkHandler(e) {
-        console.log(e);
+        console.log("clicked");
+        inBetweenCheckbox = false;
+
+        if (e.shiftKey && this.checked) {
+          checkboxes.forEach((checkbox) => {
+            if (checkbox === this || checkbox === lastClicked) {
+              inBetweenCheckbox = !inBetweenCheckbox;
+            }
+
+            if (inBetweenCheckbox) {
+              checkbox.checked = true;
+            }
+          });
+        }
+
+        lastClicked = this;
       }
 
-      checkboxes.forEach((checkbox) => {
-        checkbox.addEventListener("click", checkHandler);
-      });
+      checkboxes.forEach((checkbox) =>
+        checkbox.addEventListener("click", checkHandler)
+      );
     </script>
   </body>
 </html>
