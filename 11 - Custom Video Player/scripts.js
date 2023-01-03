@@ -5,6 +5,7 @@ const play = document.querySelector(".toggle");
 const ranges = document.querySelectorAll(".player__slider");
 const skipButtons = document.querySelectorAll("[data-skip]");
 const progressBar = document.querySelector(".progress__filled");
+const progress = document.querySelector(".progress");
 // const playbackRate = document.querySelector("[name=playbackRate]");
 // const rewind10 = document.querySelector("[data-skip='-10']");
 
@@ -35,6 +36,13 @@ function handleProgress() {
   const percent = (video.currentTime / video.duration) * 100;
   progressBar.style.flexBasis = `${percent}%`;
 }
+
+function scrub(e) {
+  console.log(e);
+  // takes where I clicked amd divides it with total width of pogress. Then multiplies it with the video duration, to get a percentage.
+  const scrubTime = (e.offsetX / progress.offsetWidth) * video.duration;
+  video.currentTime = scrubTime;
+}
 /* Hook up the event listeners */
 video.addEventListener("click", togglePlay);
 video.addEventListener("play", updateButton);
@@ -48,5 +56,7 @@ ranges.forEach((slider) =>
 ranges.forEach((slider) =>
   slider.addEventListener("mousemove", handleRangeUpdate)
 );
+
+progress.addEventListener("click", scrub);
 
 play.addEventListener("click", togglePlay);
