@@ -50,6 +50,7 @@ video.addEventListener("pause", updateButton);
 video.addEventListener("timeupdate", handleProgress);
 
 skipButtons.forEach((button) => button.addEventListener("click", skip));
+
 ranges.forEach((slider) =>
   slider.addEventListener("change", handleRangeUpdate)
 );
@@ -57,6 +58,10 @@ ranges.forEach((slider) =>
   slider.addEventListener("mousemove", handleRangeUpdate)
 );
 
+let mousedown = false;
 progress.addEventListener("click", scrub);
+progress.addEventListener("mousemove", (e) => mousedown && scrub(e));
+progress.addEventListener("mousedown", () => (mousedown = true));
+progress.addEventListener("mouseup", () => (mousedown = false));
 
 play.addEventListener("click", togglePlay);
