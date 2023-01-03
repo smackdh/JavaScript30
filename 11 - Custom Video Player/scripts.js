@@ -6,10 +6,9 @@ const ranges = document.querySelectorAll(".player__slider");
 const skipButtons = document.querySelectorAll("[data-skip]");
 const progressBar = document.querySelector(".progress__filled");
 const progress = document.querySelector(".progress");
+const fullScreenToggle = document.querySelector(".fullscreenToggle");
 // const playbackRate = document.querySelector("[name=playbackRate]");
 // const rewind10 = document.querySelector("[data-skip='-10']");
-
-console.log(video);
 
 /*Build out functions */
 
@@ -38,10 +37,20 @@ function handleProgress() {
 }
 
 function scrub(e) {
-  console.log(e);
   // takes where I clicked amd divides it with total width of pogress. Then multiplies it with the video duration, to get a percentage.
   const scrubTime = (e.offsetX / progress.offsetWidth) * video.duration;
   video.currentTime = scrubTime;
+}
+
+function handleFullscreen() {
+  console.log("fullscreen");
+  if (video.requestFullscreen) {
+    video.requestFullscreen();
+  } else if (video.webkitRequestFullscreen) {
+    video.webkitRequestFullscreen();
+  } else if (video.msRequestFullscreen) {
+    video.msRequestFullscreen();
+  }
 }
 /* Hook up the event listeners */
 video.addEventListener("click", togglePlay);
@@ -65,3 +74,5 @@ progress.addEventListener("mousedown", () => (mousedown = true));
 progress.addEventListener("mouseup", () => (mousedown = false));
 
 play.addEventListener("click", togglePlay);
+
+fullScreenToggle.addEventListener("click", handleFullscreen);
