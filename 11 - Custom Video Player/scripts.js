@@ -25,11 +25,18 @@ function updateButton() {
 function skip() {
   video.currentTime += parseFloat(this.dataset.skip);
 }
+
+function handleRangeUpdate() {
+  console.log(this.value);
+}
 /* Hook up the event listeners */
 video.addEventListener("click", togglePlay);
 video.addEventListener("play", updateButton);
 video.addEventListener("pause", updateButton);
 
 skipButtons.forEach((button) => button.addEventListener("click", skip));
+ranges.forEach((slider) =>
+  slider.addEventListener("change", handleRangeUpdate)
+);
 
 play.addEventListener("click", togglePlay);
