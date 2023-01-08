@@ -53,6 +53,10 @@
 
       // and think we make a copy:
 
+      const cap2 = Object.assign({}, person, { number: 99 });
+      // take a blank object, we take all the properties from our object person, then we add our own ones.
+
+      const cap3 = { ...person };
       // how do we take a copy instead?
 
       // We will hopefully soon see the object ...spread
