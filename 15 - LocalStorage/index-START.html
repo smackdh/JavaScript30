@@ -56,7 +56,7 @@
     <script>
       const addItems = document.querySelector(".add-items");
       const itemsList = document.querySelector(".plates");
-      const items = [];
+      const items = JSON.parse(localStorage.getItem("items")) || []; // if there is any localstorage, it will be that, else empty
 
       function addItem(event) {
         event.preventDefault();
@@ -86,8 +86,8 @@
           })
           .join(""); // map returns an array, we put it together as astring for the HTML.
       }
-
       addItems.addEventListener("submit", addItem);
+      populateList(items, itemsList);
     </script>
   </body>
 </html>
