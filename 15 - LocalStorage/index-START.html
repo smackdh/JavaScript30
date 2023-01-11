@@ -53,6 +53,7 @@
       </form>
       <button id="clear" type="submit" />Clear</button>
       <button id="toggleDone" type="submit" />☑ All</button>
+      <button id="toggleIncomplete" type="submit" /> 🪹 All</button>
     </div>
 
     <script>
@@ -60,6 +61,8 @@
       const itemsList = document.querySelector(".plates");
       const clearButton = document.querySelector("#clear");
       const toggleDoneButton = document.querySelector("#toggleDone");
+      const toggleIncompleteButton = document.querySelector("#toggleIncomplete");
+      const toggle = document.querySelector("#toggleDone");
       let items = JSON.parse(localStorage.getItem("items")) || []; // if there is any localstorage, it will be that, else empty
 
       function addItem(event) {
@@ -109,7 +112,6 @@
 
       function toggleAll() {
         console.log('toggle all')
-        const elements = items
         const newItems = items.map((item) => {
           item.done = true
           return item;
@@ -118,8 +120,19 @@
         localStorage.setItem("items", JSON.stringify(items));
       }
 
+      function setIncomplete() {
+        console.log('set all incomplete')
+        const newItems = items.map((item) => {
+          item.done = false
+          return item;
+        })
+        populateList(newItems, itemsList);
+        localStorage.setItem('item', JSON.stringify(items));
+      }
+
       clearButton.addEventListener("click", clearListHandler);
       toggleDoneButton.addEventListener("click", toggleAll);
+      toggleIncompleteButton.addEventListener("click", setIncomplete);
       addItems.addEventListener("submit", addItem);
       itemsList.addEventListener("click", toggleDone);
 
