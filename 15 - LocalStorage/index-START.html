@@ -58,9 +58,9 @@
 
     <script>
       const addItems = document.querySelector(".add-items");
-      const itemsList = document.querySelector(".plates");
+      const list = document.querySelector(".plates");
       const clearButton = document.querySelector("#clear");
-      const toggleDoneButton = document.querySelector("#toggleDone");
+      const toggleAllButton = document.querySelector("#toggleDone");
       const toggleIncompleteButton = document.querySelector("#toggleIncomplete");
       const toggle = document.querySelector("#toggleDone");
       let items = JSON.parse(localStorage.getItem("items")) || []; // if there is any localstorage, it will be that, else empty
@@ -69,13 +69,13 @@
         event.preventDefault();
         const text = this.querySelector("[name=item]").value; // this will be the actual form. then we look inside the form after something that has the name attribute item.
 
-        const item = {
+        const newItem = {
           text,
           done: false,
         };
 
-        items.push(item);
-        populateList(items, itemsList);
+        items.push(newItem);
+        populateList(items, list);
         localStorage.setItem("items", JSON.stringify(items));
         this.reset();
       }
@@ -93,6 +93,8 @@
           })
           .join(""); // map returns an array, we put it together as astring for the HTML.
       }
+
+
       function toggleDone(e) {
         if (!e.target.matches("input")) return; // skips if target is not an input.
         // event delegation - chatGPT
@@ -100,43 +102,41 @@
         const index = element.dataset.index;
         items[index].done = !items[index].done;
         localStorage.setItem("items", JSON.stringify(items));
-        populateList(items, itemsList);
+        populateList(items, list);
       }
 
       /// extra
-      function clearListHandler() {
+      function clearList() {
         localStorage.removeItem("items");
         items = [];
-        populateList(items, itemsList)
+        populateList(items, list)
       }
 
-      function toggleAll() {
-        console.log('toggle all')
+      function setAllComplete() {
         const newItems = items.map((item) => {
           item.done = true
           return item;
         })
-        populateList(newItems, itemsList)
+        populateList(newItems, list)
         localStorage.setItem("items", JSON.stringify(items));
       }
 
-      function setIncomplete() {
-        console.log('set all incomplete')
+      function setAllIncomplete() {
         const newItems = items.map((item) => {
-          item.done = false
+          item.done = false;
           return item;
         })
-        populateList(newItems, itemsList);
-        localStorage.setItem('item', JSON.stringify(items));
+        populateList(newItems, list);
+        localStorage.setItem('items', JSON.stringify(items));
       }
 
-      clearButton.addEventListener("click", clearListHandler);
-      toggleDoneButton.addEventListener("click", toggleAll);
-      toggleIncompleteButton.addEventListener("click", setIncomplete);
+      clearButton.addEventListener("click", clearList);
+      toggleAllButton.addEventListener("click", setAllComplete);
+      toggleIncompleteButton.addEventListener("click", setAllIncomplete);
       addItems.addEventListener("submit", addItem);
-      itemsList.addEventListener("click", toggleDone);
+      list.addEventListener("click", toggleDone);
 
-      populateList(items, itemsList);
+      populateList(items, list);
     </script>
   </body>
 </html>
